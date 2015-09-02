@@ -9,6 +9,20 @@ const (
 	headerXmlns = "http://www.sitemaps.org/schemas/sitemap/0.9"
 )
 
+// Those values represent the posible change frequences
+const (
+	Always  ChangeFreq = "always"
+	Hourly  ChangeFreq = "hourly"
+	Daily   ChangeFreq = "daily"
+	Weekly  ChangeFreq = "weekly"
+	Monthly ChangeFreq = "monthly"
+	Yearly  ChangeFreq = "yearly"
+	Never   ChangeFreq = "never"
+)
+
+// ChangeFreq is a type to only permit coerant choice
+type ChangeFreq string
+
 // Page is the XML page
 type Page struct {
 	// Set the name of the element
@@ -66,6 +80,6 @@ func (c *IndexPage) GetXML() ([]byte, error) {
 type Sitemap struct {
 	Loc        string     `xml:"loc"`
 	LastMod    *time.Time `xml:"lastmod,omitempty"`
-	Changefreq string     `xml:"changefreq,omitempty"`
+	Changefreq ChangeFreq `xml:"changefreq,omitempty"`
 	Priority   float32    `xml:"priority,omitempty"`
 }
