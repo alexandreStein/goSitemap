@@ -32,7 +32,7 @@ type Page struct {
 }
 
 // GetXML return the corresponding sitemap XML
-func (c *Page) GetXML() ([]byte, error) {
+func (c Page) GetXML() ([]byte, error) {
 	// Add the sitemap attribut
 	c.Xmlns = headerXmlns
 
@@ -52,10 +52,10 @@ func (c *Page) GetXML() ([]byte, error) {
 
 // IndexPage represent the sitemap index element
 type IndexPage struct {
+	Page
 	// Set the name of the element
 	XMLName xml.Name   `xml:"sitemapindex"`
 	Urlset  []*Sitemap `xml:"sitemap"`
-	Xmlns   string     `xml:"xmlns,attr"`
 }
 
 // GetXML return the corresponding sitemap XML

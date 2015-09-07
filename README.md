@@ -12,32 +12,41 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/alexandreStein/sitemap"
 )
 
 func main() {
+	// Set the last modification to now
+	now := time.Now()
+
+	// Initialize a standard sitemap
 	sMap := sitemap.Page{
 		Urlset: []*sitemap.Sitemap{
 			&sitemap.Sitemap{
 				Loc:        "https://www.test.com",
-				Changefreq: "daily",
+				LastMod:    &now,
+				Changefreq: sitemap.Daily,
 				Priority:   0.5,
 			},
 		},
 	}
+	// Build the XML output
 	x, err := sMap.GetXML()
 	fmt.Println(string(x), err)
 
+	// Initialize an index sitemap
 	sMapi := sitemap.IndexPage{
 		Urlset: []*sitemap.Sitemap{
 			&sitemap.Sitemap{
-				Loc: "https://www.test.com",
+				Loc: "https://www.test.com/sitemap.xml",
 			},
 		},
 	}
-
+	// Same as sitemap page build the XML using GetXML
 	x, err = sMapi.GetXML()
 	fmt.Println(string(x), err)
 }
+
 ```
