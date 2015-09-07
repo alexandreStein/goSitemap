@@ -32,22 +32,12 @@ type Page struct {
 }
 
 // GetXML return the corresponding sitemap XML
-func (c Page) GetXML() ([]byte, error) {
+func (p *Page) GetXML() ([]byte, error) {
 	// Add the sitemap attribut
-	c.Xmlns = headerXmlns
+	p.Xmlns = headerXmlns
 
 	// Marshal the object to bytes
-	retXML, err := xml.Marshal(c)
-	// retXML, err := xml.MarshalIndent(c, "", "	")
-	if err != nil {
-		return nil, err
-	}
-
-	// Add the XML header at the first place and concat the rest of the XML export
-	ret := []byte(xml.Header)
-	ret = append(ret, retXML...)
-
-	return ret, nil
+	return getXML(xml.Marshal(p))
 }
 
 // IndexPage represent the sitemap index element
@@ -59,13 +49,24 @@ type IndexPage struct {
 }
 
 // GetXML return the corresponding sitemap XML
-func (c *IndexPage) GetXML() ([]byte, error) {
+func (p *IndexPage) GetXML() ([]byte, error) {
 	// Add the sitemap attribut
-	c.Xmlns = headerXmlns
+	p.Xmlns = headerXmlns
 
 	// Marshal the object to bytes
-	retXML, err := xml.Marshal(c)
-	// retXML, err := xml.MarshalIndent(c, "", "	")
+	return getXML(xml.Marshal(p))
+}
+
+// Sitemap is actualy the real sitemap element
+type Sitemap struct {
+	Loc        string     `xml:"loc"`
+	LastMod    *time.Time `xml:"lastmod,omitempty"`
+	Changefreq ChangeFreq `xml:"changefreq,omitempty"`
+	Priority   float32    `xml:"priority,omitempty"`
+}
+
+// This function is a convergent function as workaround for subclasses
+func getXML(retXML []byte, err error) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
@@ -75,12 +76,4 @@ func (c *IndexPage) GetXML() ([]byte, error) {
 	ret = append(ret, retXML...)
 
 	return ret, nil
-}
-
-// Sitemap is actualy the real sitemap element
-type Sitemap struct {
-	Loc        string     `xml:"loc"`
-	LastMod    *time.Time `xml:"lastmod,omitempty"`
-	Changefreq ChangeFreq `xml:"changefreq,omitempty"`
-	Priority   float32    `xml:"priority,omitempty"`
 }
