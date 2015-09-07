@@ -7,7 +7,7 @@ Documentation can be found at: http://godoc.org/github.com/alexandreStein/sitema
 
 Example:
 
-```golang
+```go
 package main
 
 import (
