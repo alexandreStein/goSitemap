@@ -7,6 +7,7 @@ Documentation can be found at: http://godoc.org/github.com/alexandreStein/sitema
 
 Example:
 
+```golang
 package main
 
 import (
@@ -39,3 +40,4 @@ func main() {
 	x, err = sMapi.GetXML()
 	fmt.Println(string(x), err)
 }
+```
