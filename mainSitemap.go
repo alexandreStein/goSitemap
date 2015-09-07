@@ -65,6 +65,7 @@ func (c *IndexPage) GetXML() ([]byte, error) {
 
 	// Marshal the object to bytes
 	retXML, err := xml.Marshal(c)
+	// retXML, err := xml.MarshalIndent(c, "", "	")
 	if err != nil {
 		return nil, err
 	}
